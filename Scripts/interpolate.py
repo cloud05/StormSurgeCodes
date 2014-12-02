@@ -5046,7 +5046,7 @@ def prov():
     stats = []
     tide_stations = []       
     for stations in surgetotide_dict.keys():
-        if 'cg' in stations[-2:]:
+        if 'au' in stations[-2:]:
             stats.append(stations)
             for station in stats:
                 somevalue = surgetotide_dict[station]
