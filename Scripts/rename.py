@@ -25,7 +25,9 @@ DIC = {'DBL':'BALANACAN','ABR':'BALER','DBR':'BALER','ABQ':'BALINTANG','DBS':'BA
 randshit = ['Butag Bay', 'Gubat', 'Port Boca Engano, Burias Isl', 'San Bernardino Island', 'Santa Cruz Harbor', 'Tabaco, Tabaco Bay', 'Torrijos', 'Virac, Catanduances Isl']      
 key = [y for y in DIC.keys()]
 val = [DIC[y] for y in key]
-path = r'C:\Users\Windows User\Desktop\Work\Fieldworks\CagayanOutputs\Tides\Karen2008'
+count = 0
+while count < 7:
+    path = raw_input('Enter: ')#r'C:\Users\Windows User\Desktop\Work\Fieldworks\CagayanOutputs\Tides\Karen2008'
 #edit HVT files
 #for root, dirnames, filenames in os.walk(path):
 #    for filename in fnmatch.filter(filenames, '*.hvt'):
@@ -102,7 +104,7 @@ path = r'C:\Users\Windows User\Desktop\Work\Fieldworks\CagayanOutputs\Tides\Kare
     
     
 
-for root, dirnames, filenames in os.walk(path):
+    for root, dirnames, filenames in os.walk(path):
 #    for filename in fnmatch.filter(filenames, '*.txt'):
         
 #        if filename[:-4] not in randshit:
@@ -119,11 +121,13 @@ for root, dirnames, filenames in os.walk(path):
 #           
 #        print filename
 #        print filename[:-6]
-    for filename in filenames:
-        if not filename in fnmatch.filter(filenames, '*.txt'):
-            print filename
-            w = os.path.join(root, filename)
-            os.rename(w,w+'.txt')
+        for filename in filenames:
+            if not filename in fnmatch.filter(filenames, '*.txt'):
+                print filename
+                w = os.path.join(root, filename)
+                os.rename(w,w+'.txt')
+    count +=1
+    print count
 ##            os.remove(w)
 #        if 'X' in filename:
 #            aa = filename.strip('X')

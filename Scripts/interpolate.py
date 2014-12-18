@@ -5039,14 +5039,14 @@ def interpolator_generator(x1, y1, x2, y2, x3, y3, x, y):
     return interpolate
 
 #----------------------
-def prov():
+def prov(x):
     """
         This function generates the tide points to be calculated in wxTide for a certain province. 
     """
     stats = []
     tide_stations = []       
     for stations in surgetotide_dict.keys():
-        if 'au' in stations[-2:]:
+        if x in stations[-2:]:
             stats.append(stations)
             for station in stats:
                 somevalue = surgetotide_dict[station]
