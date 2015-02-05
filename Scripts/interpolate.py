@@ -5042,6 +5042,7 @@ def interpolator_generator(x1, y1, x2, y2, x3, y3, x, y):
 def prov(x):
     """
         This function generates the tide points to be calculated in wxTide for a certain province. 
+        Input: prov code type: string
     """
     stats = []
     tide_stations = []       

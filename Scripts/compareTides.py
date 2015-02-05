@@ -158,13 +158,13 @@ def parse_lonlat(y,x):
             y = y.replace(c,'')
             if len(y)<7:
                 y = y+'-00'
-#                print y
+
     for d in x:
         if d in string.ascii_letters:
             x = x.replace(d,'')
             if len(x)<7:
                 x = x+'-00'
-#                print x
+
 
     coord = "( {}\"E, {}\"N)".format(y,x)
     latlon_regex = r"\(\s*(\d+)-(\d+)-([\d.]+)\"([WE]),\s*(\d+)-(\d+)-([\d.]+)\"([NS])\s*\)"
@@ -182,7 +182,7 @@ def parse_lonlat(y,x):
 if __name__ == '__main__':
     while True:
         try:
-            mainDir = r'C:\Users\Windows User\Desktop\Work\tide\TIDAL DATA\NOAH'#raw_input("Enter the root directory: ")#raw_input("Enter the station folder you want to compare: ")
+            mainDir = r'C:\Users\Windows User\Desktop\tide'#raw_input("Enter the root directory: ")#raw_input("Enter the station folder you want to compare: ")
             folders = os.path.normpath(mainDir)
             for root, dirnames, filenames in os.walk(folders):
                 for filename in fnmatch.filter(filenames, '*.txt'):
@@ -191,6 +191,7 @@ if __name__ == '__main__':
                     filename = filename[:-6] 
             #            print filename
                     print "Comparing tides from {} to {} in {}.".format(start_year, end_year, filename)
+                    #parse long-lat from dic                    
                     try:
                         lonz = dic[filename][1]#raw_input("Enter longtitude of station: ")
                         latz = dic[filename][0]#raw_input("Enter latitude of station: ")       

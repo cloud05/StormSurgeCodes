@@ -9,7 +9,7 @@ import csv
 from collections import Counter
 from collections import defaultdict
 
-csvfile = r'C:\Users\Windows User\Desktop\Work\provinces.csv'
+csvfile = r'C:\Users\Windows User\Desktop\LaUnionIlocosField Work\Ilocos.csv'
 bagyo = []
 points = {}
 station = []
@@ -36,10 +36,10 @@ data2 = defaultdict(list)
 #        print x +': '+ str(len(y))
         
 read = csv.reader(open(csvfile))
-#next(read)
+next(read)
 for row in read:
-    key = row[1][3:]
-    points[key] = row[0]
+#    key = row[1][3:]
+#    points[key] = row[0]
     
 #    a = row[0].split()
 #    if len(a) > 3:
@@ -48,11 +48,11 @@ for row in read:
 #        del a[0]
 #        print a
         
-#    key = row[3]
-#    points[key] = row[6]
-#    bagyo.append(row[6])
-#new = [x for x in bagyo if x != '']
-#c = Counter(new)
-##print 'Ilocos : '
-#print c.most_common()
+    key = row[3]
+    points[key] = row[6]
+    bagyo.append(row[6])
+new = [x for x in bagyo if x != '']
+c = Counter(new)
+print 'in : '
+print c.most_common()
 

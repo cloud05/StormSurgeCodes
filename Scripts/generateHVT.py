@@ -16,8 +16,10 @@ import shutil
 from interpolate import alphanum
 from interpolate import surgetotide_dict
 from interpolate import interpolator_generator
+#from interpolate import prov
 #from phillip import listdir_fullpath
 from makeHvt import hvt
+import numpy as np
 
 ##Do not forget to change the provinvial code!
 ##
@@ -25,7 +27,7 @@ root = raw_input("Enter the root of tidepath: ")
 provCode = raw_input("Enter the code for the province: ")
 listDir = os.listdir(root)
 count = 0
-for folder in listDir:
+for folder in listDir: 
     TIDEPATH = os.path.join(root,folder) #raw_input("Enter the tidepath: ") #r'C:\Users\Windows User\Desktop\Work\Fieldworks\SorsogonOutputs\Tides\Reming2006'
 
 ##for root, dirnames, filenames in os.walk(TIDEPATH):
@@ -90,33 +92,46 @@ for folder in listDir:
 ##sorsogon = ['Batuan Bay, Ticao Isl', 'Biri Island', 'Butag Bay', 'Gubat', 'Port Boca Engano, Burias Isl', 'Port San Miguel, Ticao Isl', 'San Bernardino Island', 'Santa Cruz Harbor', 'Santo Nino, Santo Nino Isl', 'Tabaco, Tabaco Bay', 'Torrijos', 'Virac, Catanduances Isl']
 #albay = ['Butag Bay', 'Gubat', 'Port Boca Engano, Burias Isl', 'San Bernardino Island', 'Santa Cruz Harbor', 'Tabaco, Tabaco Bay', 'Tabgon Bay', 'Torrijos', 'Virac, Catanduances Isl']    
 #
-        print 'Reading tide data...'
+#        print 'Reading tide data...'
+#        xtideFileList = glob.glob(os.path.join(TIDEPATH, '*.txt'))
+#        tideStationDict = {}
+#        for filename in sorted(xtideFileList):
+#            print 'Processing', os.path.basename(filename)
+#            with open(filename, 'r') as tideFile:
+#                tideData = tideFile.readlines()
+#            tideStation = alphanum(tideData[0])
+#            for i in range(len(tideData)):
+#                if tideData[i].strip('\r\n') == '':
+#                    break
+#            tideData = tideData[i:]
+#            cleanedTideData = []
+#            for i in range(len(tideData)):
+#                tideData[i] = tideData[i].replace('\r\n', '').split()
+#                if tideData[i]:
+#                    cleanedTideData.append(tideData[i])
+#            for i in range(len(cleanedTideData)):
+#                if len(cleanedTideData[i]) < 4:
+#                    cleanedTideData[i].append(cleanedTideData[i - 1][3])
+#            tideValueDict = {}
+#            for i in range(len(cleanedTideData)):
+#                if len(cleanedTideData[i][1]) < 5:
+#                    cleanedTideData[i][1] = '0' + cleanedTideData[i][1]
+#                dataTime = datetime.datetime.strptime(cleanedTideData[i][3] +
+#                           cleanedTideData[i][1], '%Y-%m-%d%H:%M') + (
+#                           datetime.timedelta(hours=8))
+#                tideValueDict[dataTime] = cleanedTideData[i][0]
+#            tideStationDict[tideStation] = tideValueDict
+#        print '\nDone reading tide data...\n'
+        
+        print 'Reading tide data...\n'
         xtideFileList = glob.glob(os.path.join(TIDEPATH, '*.txt'))
-##
-###~ Get tide values from Wxtide.
-###~ One value coressponds to an entry on the list.
-###~ entry format : [value(m), HH:MM, time_format, MM/DD/YYYY]
-##
-###~ tideStationDict={tide_station1:{time1:value1,
-##                                 #~ time2:value2,
-##                                 #~ time3:value3
-##                                 #~ ...},
-##                  #~ tide_station2:{time1:value1,
-##                                 #~ time2:value2,
-##                                 #~ time3:value3
-##                                 #~ ...},
-##                  #~ ...}
-##
         tideStationDict = {}
         for filename in sorted(xtideFileList):
             print 'Processing', os.path.basename(filename)
             with open(filename, 'r') as tideFile:
                 tideData = tideFile.readlines()
             tideStation = alphanum(tideData[0])
-            for i in range(len(tideData)):
-                if tideData[i].strip('\r\n') == '':
-                    break
-            tideData = tideData[i:]
+            tideData = tideData[3:]
             cleanedTideData = []
             for i in range(len(tideData)):
                 tideData[i] = tideData[i].replace('\r\n', '').split()
@@ -132,9 +147,14 @@ for folder in listDir:
                 dataTime = datetime.datetime.strptime(cleanedTideData[i][3] +
                            cleanedTideData[i][1], '%Y-%m-%d%H:%M') + (
                            datetime.timedelta(hours=8))
-                tideValueDict[dataTime] = cleanedTideData[i][0]
+                tideValueDict[dataTime] = float(cleanedTideData[i][0])
+            tideValues = [tideValueDict[t] for t in tideValueDict.keys()]
+            meanTide = np.mean(tideValues)
+            for t in tideValueDict.keys():
+                tideValueDict[t] = tideValueDict[t] - meanTide
             tideStationDict[tideStation] = tideValueDict
         print '\nDone reading tide data...\n'
+
         
         stationListGroup = ['Station List 1',
                             'Station List 2',
